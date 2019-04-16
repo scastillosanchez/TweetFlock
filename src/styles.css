@@ -1,0 +1,138 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: #00aced;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+header h1 {
+    color: #ffffff;
+}
+
+h2, h3, h4 {
+    text-align: center;
+}
+
+
+/* index.html modal entry */
+#enterContent {
+    margin: 50px auto;
+    width: 80%;
+}
+
+img#logo {
+    height: 200px;
+    width: 300px;
+    text-align: center;
+    display: block;
+    margin: 5px auto;
+}
+
+#allow {
+    margin: 5px auto;
+}
+
+/* index.html */
+#message {
+    width: 80%;
+    margin: 0 auto;
+}
+#pills-tab {
+    margin-bottom: 5px;
+}
+
+form {
+    border: 2px solid black;
+    width: 80%;
+    margin: 5px auto;
+    background-color: #c0deed !important;
+    padding: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+input[type=text], input[type=number] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#alert {
+    width: 80%;
+    margin: 5px auto;
+}
+
+.container-tweets {
+    display: none;
+    width: 80%;
+    margin: 20px auto 0;
+}
+
+.container-tweets h3 {
+    background-color: #00aced;
+    color: #ffffff;
+}
+
+.container-tweets ul {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+}
+
+.container-tweets ul li {
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
+    height: 100px;
+}
+
+.container-tweets ul li:last-child {
+    border-bottom: none;
+}
+
+#userN {
+    color: #00aced;
+}
+
+#profilepic {
+    height: 60px;
+    width: 60px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#visuals {
+    margin-top: 10px;
+    display: none;
+}
+
+footer {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 10px;
+}
+
+@media only screen and (max-width: 700px) {
+    .container-tweets ul li {
+        height: 150px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .container-tweets ul li {
+        height: 200px;
+    }
+}

@@ -1,0 +1,165 @@
+<!-- Sebastian Castillo-Sanchez. Lab 5 -->
+<!doctype html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <title>TweetFlock</title>
+  </head>
+  <body ng-controller="myController">
+    <header>
+        <h1>TweetFlock</h1>
+    </header>
+
+    <div id="enter" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div id="enterContent" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome to TweetFlock!</h5>
+                </div>
+                <div class="modal-body">
+                    <img src="tweetflock.png" alt="TweetFlock logo" id="logo" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="allow" data-dismiss="modal">Enter App</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="message">
+        <div class="jumbotron">
+            <h1 class="display-4">About TweetFlock</h1>
+            <p class="lead">This application will allow the user to get real-live tweets from Twitter based on a keyword that they input as well as an
+                amount that they want. If the keyword is empty, it will load new tweets from NYC and will default to
+                10 tweets if the amount box is empty. To reset the form, please press the Reset! button</p>
+            <hr class="my-4">
+            <p>To view the tweets loaded, please go to the Show Tweets tab or please view the Export Tweets tab to export the
+                tweets to a JSON, CSV or XML file. If you would like to see visualizations based on the tweets collected, please explore the Visualize Tweets button. Enjoy!</p>
+        </div>
+    </div>
+
+
+    <form>
+        <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-get-tab" data-toggle="pill" href="#pills-get" role="tab" aria-controls="pills-get" aria-selected="true">Get Tweets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-show" role="tab" aria-controls="pills-show" aria-selected="false">Show Tweets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-export" role="tab" aria-controls="pills-export" aria-selected="false">Export Tweets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-visualize-tab" data-toggle="pill" href="#pills-visual" role="tab" aria-controls="pills-visual" aria-selected="false">Visualize Tweets</a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-get" role="tabpanel" aria-labelledby="pills-get-tab">
+                <h3>Search for Tweets</h3>
+                <p class="lead">After pressing the Get Tweets! button, please wait for an alert to appear before
+                trying to show the tweets or exporting them.</p>
+                <div class="form-group">
+                    <label for="search">Search:</label>
+                    <input class="form-control" type="text" name="search" ng-model="searchQuery" id="sq" placeholder="Enter keyword"/>
+                    <label for="amt">How many Tweets should show:</label>
+                    <input class="form-control" type="number" min="1" max="100" name="amt" ng-model="amtTweets" placeholder="10"/>
+
+                    <button type="button" id="getbutton" class="btn btn-primary btn-lrg btn-block" ng-click="returnQuery()">Get Tweets!</button>
+                    <button type="button" class="btn btn-secondary btn-lrg btn-block" id="reload" ng-click="resetQuery()">Reset!</button>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-show" role="tabpanel" aria-labelledby="pills-show-tab">
+                <h3>Show Tweets</h3>
+                <p class="lead">Press the button below to show the tweets that you queried from the Get Tweets tab. If you haven't done that yet
+                    please do so before pressing the button below</p>
+                <button type="button" class="btn btn-primary btn-lrg btn-block" id="show" ng-click="showTweets()">Show Tweets!</button>
+            </div>
+
+            <div class="tab-pane fade" id="pills-export" role="tabpanel" aria-labelledby="pills-export-tab">
+                <h3>Export tweets to JSON/CSV/XML files</h3>
+                <p class="lead">Please note: The "Export Tweets!" button will not function properly until user gets the tweets from the Get Tweets Tab!</p>
+                <div class="input-group">
+                    <select required class="custom-select" ng-model="fileConversion">
+                        <option value="" selected>Choose File Type</option>
+                        <option value="JSON">JSON</option>
+                        <option value="CSV">CSV</option>
+                        <option value="XML">XML</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-primary" id="export" ng-click="getFile()">Export Tweets!</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-visual" role="tabpanel" aria-labelledby="pills-visual-tab">
+                <h3>Visualize Tweets!</h3>
+                <p class="lead">This page will allow you to visualize the twitter data you collected through Chart.js based
+                visualizations. Please note that you must collect and show the tweets before the visualizations will appear on the page!</p>
+                <button type="button" id="visualize" class="btn btn-primary btn-block btn-large">Visualize Tweets!</button>
+                <div id="visuals">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                <a class="nav-link active" id="v-pills-country-tab" data-toggle="pill" href="#country" role="tab" aria-controls="country" aria-selected="true">Tweets By Country</a>
+                                <a class="nav-link" id="v-pills-retweets-tab" data-toggle="pill" href="#retweets" role="tab" aria-controls="retweets" aria-selected="false">Amount of Retweets</a>
+                                <a class="nav-link" id="v-pills-followers-tab" data-toggle="pill" href="#followers" role="tab" aria-controls="followers" aria-selected="false">Top 5 Follower Count</a>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="country" role="tabpanel" aria-labelledby="country">
+                                    <canvas id="pieChart" width="100" height="100"></canvas>
+                                </div>
+                                <div class="tab-pane fade" id="retweets" role="tabpanel" aria-labelledby="retweets">
+                                    <canvas id="doughnutChart" width="100" height="100"></canvas>
+                                </div>
+                                <div class="tab-pane fade" id="followers" role="tabpanel" aria-labelledby="followers">
+                                    <canvas id="barChart" width="100" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <div id="alert">
+        <div class="alert" role="alert"></div>
+    </div>
+
+
+    <div class="container-tweets">
+       <h3>Tweets</h3>
+        <ul>
+            <li ng-repeat="tweet in listTweets"><img id="profilepic" ng-src="{{tweet.user.profile_image_url}}" alt="profile pic"/><span id="userN">{{tweet.user.name}} @{{tweet.user.screen_name}}</span> <br>{{tweet.text}}</li>
+        </ul>
+    </div>
+    <footer>Sebastian Castillo-Sanchez. WebSci Lab 9</footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="frontend-jquery.js"></script>
+    <script src="frontend-angular.js"></script>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

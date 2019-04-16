@@ -1,0 +1,28 @@
+{
+  "name": "lab9",
+  "version": "1.0.0",
+  "description": "Lab 9 WebSci TweetFlock",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "tweet",
+    "api",
+    "mongo",
+    "visualize",
+    "data",
+    "angular",
+    "node"
+  ],
+  "author": "Sebastian Castillo-Sanchez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "json2csv": "^4.4.1",
+    "jsontoxml": "^1.0.1",
+    "mongodb": "^3.2.3",
+    "twitter": "^1.7.1"
+  }
+}
